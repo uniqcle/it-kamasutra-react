@@ -1,0 +1,18 @@
+import classes from "./Post.module.css";
+
+const Post = () => {
+	return (
+        <div className={classes.item}>
+            <img
+                src="https://avatars.mds.yandex.net/get-yapic/40841/v4k7jopH1MHphuE5zBGDsa4fyRs-1/orig"
+                alt=""
+            />
+            post 1
+            <div>
+                <span>Like</span>
+            </div>
+        </div>
+    );
+};
+
+export default Post;
