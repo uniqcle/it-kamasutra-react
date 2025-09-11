@@ -1,25 +1,63 @@
-import classes from './Navbar.module.css'
+import { Link, NavLink } from "react-router-dom";
+import classes from "./Navbar.module.css";
 
 const Navbar = () => {
     return (
         <div className={classes.nav}>
-            <div>Profile</div>
             <ul>
-                <li className={`${classes.item} ${classes.active}`}>
-                    <a>Messages</a>
+                <li className={`${classes.item}`}>
+                    <NavLink
+                        to="/profile"
+                        className={({ isActive }) =>
+                            isActive ? classes.navActiveLink : ""
+                        }
+                    >
+                        Profile
+                    </NavLink>
+                </li>
+                <li className={`${classes.item}`}>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive ? classes.navActiveLink : ""
+                        }
+                        to="/dialogs"
+                    >
+                        Dialogs
+                    </NavLink>
                 </li>
                 <li className={classes.item}>
-                    <a>News</a>
+                    <NavLink
+                        to="/news"
+                        className={({ isActive }) =>
+                            isActive ? classes.navActiveLink : ""
+                        }
+                    >
+                        News
+                    </NavLink>
                 </li>
                 <li className={classes.item}>
-                    <a>Music</a>
+                    <NavLink
+                        to="/music"
+                        className={({ isActive }) =>
+                            isActive ? classes.navActiveLink : ""
+                        }
+                    >
+                        Music
+                    </NavLink>
                 </li>
                 <li className={classes.item}>
-                    <a>Setings</a>
+                    <NavLink
+                        to="/settings"
+                        className={({ isActive }) =>
+                            isActive ? classes.navActiveLink : ""
+                        }
+                    >
+                        Settings
+                    </NavLink>
                 </li>
             </ul>
         </div>
     );
 };
 
-export default Navbar; 
+export default Navbar;

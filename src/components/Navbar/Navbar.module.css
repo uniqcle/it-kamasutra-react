@@ -3,10 +3,19 @@
 	background-color: blueviolet;
   }
 
-  .item {
+  .item a {
 	color: white; 
+  text-decoration: none;
   }
 
-  .item.active {
-	color: olive; 
+  .item a:hover {
+    color: orange; 
   }
+
+.navActiveLink {
+  background-color: #007bff;
+  color: red;
+  font-weight: bold;
+  }
+
+ 
