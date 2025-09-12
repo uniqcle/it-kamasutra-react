@@ -17,7 +17,12 @@ function App() {
 
             <Routes>
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/dialogs" element={<Dialogs />} />
+                <Route path="/dialogs" element={<Dialogs />}>
+                    {/* <Route index element={<DialogLayout />} /> */}
+                    <Route path=":dialogId" element={<Dialogs />} />
+                    {/* /dialogs/1, /dialogs/2 и т.д. */}
+                </Route>
+
                 <Route path="/news" element={<News />} />
                 <Route path="/music" element={<Music />} />
                 <Route path="/settings" element={<Settings />} />

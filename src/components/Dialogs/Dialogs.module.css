@@ -4,22 +4,9 @@
 	grid-template-columns: 2fr 10fr; 
 }
 
-.dialogs_items{
-	padding: 10px; 
-}
+
 
 .dialog{
 	padding: 10px; 
 }
 
-.dialog.active {
-	border: 1px solid red; 
-}
-
-.dialogs_messages{
-
-}
-
-.message{
-
-}
