@@ -1,7 +1,7 @@
 import classes from "./Post.module.css";
 
 const Post = (props) => {
-    console.log("test...");
+    const { message, likes } = props;
 
     return (
         <div className={classes.item}>
@@ -9,9 +9,9 @@ const Post = (props) => {
                 src="https://avatars.mds.yandex.net/get-yapic/40841/v4k7jopH1MHphuE5zBGDsa4fyRs-1/orig"
                 alt=""
             />
-            {props.message}
+            {message}
             <div>
-                <span>Like {props.likes}</span>
+                <span>Likes {likes}</span>
             </div>
         </div>
     );

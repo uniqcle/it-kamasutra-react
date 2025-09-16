@@ -9,15 +9,22 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import NotFound from "./components/NotFound/NotFound";
 
-function App() {
+function App(props) {
+    const { dialogs, messages } = props.state.dialogPage;
+    const { posts } = props.state.profilePage;
+
     return (
         <div className="app-wrapper">
             <Header />
             <Navbar />
 
             <Routes>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/dialogs" element={<Dialogs />}>
+                <Route path="/profile" element={<Profile posts={posts} />} />
+
+                <Route
+                    path="/dialogs"
+                    element={<Dialogs dialogs={dialogs} messages={messages} />}
+                >
                     {/* <Route index element={<DialogLayout />} /> */}
                     <Route path=":dialogId" element={<Dialogs />} />
                     {/* /dialogs/1, /dialogs/2 и т.д. */}

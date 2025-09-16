@@ -1,20 +1,16 @@
-import MyPosts from './MyPosts/MyPosts';
-import classes from './Profile.module.css'
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPosts from "./MyPosts/MyPosts";
+import classes from "./Profile.module.css";
 
-const Profile = () => {
+const Profile = (props) => {
+    const { posts } = props;
     return (
         <div className={classes.content}>
-            <div>
-                <img
-                    src="https://avatars.mds.yandex.net/i?id=ea37c708c5ce62c18b1bdd46eee2f008c6dce42c-4546260-images-thumbs&n=133"
-                    alt=""
-                />
-            </div>
-            <div>ava + description </div>
+            <ProfileInfo />
 
-            <MyPosts/>
+            <MyPosts posts={posts} />
         </div>
     );
 };
 
-export default Profile; 
+export default Profile;

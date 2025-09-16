@@ -3,11 +3,9 @@
 	border: 1px solid red; 
 }
 
-.dialogs_messages{
-
+ .messages{
+	display: flex;
+	flex-direction: row; 
 }
 
-.message{
-
-}
 

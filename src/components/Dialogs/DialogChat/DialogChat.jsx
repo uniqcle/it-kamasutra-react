@@ -1,30 +1,31 @@
 import classes from './DialogChat.module.css'
 import { useParams } from "react-router-dom";
- 
-const DialogChat = (props) => {
-	const { dialogId } = useParams(); // ← получаем ID из URL
+import Message from "../Message/Message";
 
-	if (!dialogId) {
-		return(
+const DialogChat = (props) => {
+    const { dialogId } = useParams(); // ← получаем ID из URL
+    const { messages } = props;
+
+    let messageList = messages.map((m) => (
+        <Message key={m.id} id={m.id} message={m.message} />
+    ));
+
+    if (!dialogId) {
+        return (
             <div className={classes.dialogs}>
                 <div>Выбери с кем хочешь пообщаться</div>
             </div>
         );
-	}
-	
+    }
+
     return (
-		<>
-		 
-            <div className={classes.dialogs_messages}>
-				<h3>Чат с пользователем #{dialogId}</h3>
-				
-                <div className={classes.message}>Hi</div>
-                <div className={classes.message}>How are you?</div>
-                <div className={classes.message}>I'm fine</div>
-                <div className={classes.message}>thanks</div>
+        <>
+            <div>
+                <h3>Чат с пользователем #{dialogId} </h3>
+                <div className={classes.messages}>{messageList}</div>
             </div>
         </>
     );
-}
+};
 
 export default DialogChat; 

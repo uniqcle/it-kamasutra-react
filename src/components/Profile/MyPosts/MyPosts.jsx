@@ -2,13 +2,14 @@ import classes from "./MyPosts.module.css";
 import Post from './Post/Post';
 
 const MyPosts = (props) => {
-    return (
-        <div className="posts">
-            <Post message="First message" likes="10" />
-            <Post message="Second message" likes="15" />
-            <Post message="Third message" likes="20" />
-        </div>
-    );
+
+    const { posts } = props;
+
+    let postElements = posts.map((p) => (
+        <Post key={p.id} message={p.message} likes={p.likes} />
+    ));
+
+    return <div className={classes.posts}>{postElements}</div>;
 };
 
 export default MyPosts;

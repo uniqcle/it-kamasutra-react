@@ -1,0 +1,9 @@
+
+
+.left {
+	align-self: flex-end; 
+}
+
+.right {
+	align-self: flex-start; 
+}
