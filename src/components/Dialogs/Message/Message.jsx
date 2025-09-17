@@ -8,7 +8,9 @@ const Message = (props) => {
 	
 	return (
         <>
-            <div className={class_message}>{message}</div>
+            <div className={classes.message + " " + class_message}>
+                {message}
+            </div>
         </>
     );
 }

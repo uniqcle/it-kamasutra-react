@@ -1,9 +1,13 @@
-
+.message {
+	padding: 10px; 
+}
 
 .left {
 	align-self: flex-end; 
+	border: 1px solid rebeccapurple; 
 }
 
 .right {
 	align-self: flex-start; 
+	border: 1px solid rgb(90, 99, 148); 
 }

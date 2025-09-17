@@ -12,6 +12,7 @@ import NotFound from "./components/NotFound/NotFound";
 function App(props) {
     const { dialogs, messages } = props.state.dialogPage;
     const { posts } = props.state.profilePage;
+    const addPost = props.addPost;
 
     return (
         <div className="app-wrapper">
@@ -19,7 +20,10 @@ function App(props) {
             <Navbar />
 
             <Routes>
-                <Route path="/profile" element={<Profile posts={posts} />} />
+                <Route
+                    path="/profile"
+                    element={<Profile posts={posts} addPost={addPost} />}
+                />
 
                 <Route
                     path="/dialogs"
