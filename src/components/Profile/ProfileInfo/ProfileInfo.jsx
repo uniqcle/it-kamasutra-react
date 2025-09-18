@@ -3,12 +3,16 @@ import classes from "./ProfileInfo.module.css";
 
 const ProfileInfo = (props) => {
     let newPostArea = React.createRef();
-    const addPost = props.addPost;
+    let { addPost, areaText, updateTextArea } = props;
 
     let addNewPost = () => {
+        addPost();
+    };
+
+    let changeAreaText = () => {
         let text = newPostArea.current.value;
-        addPost(text);
-        alert(text);
+        updateTextArea(text);
+        console.log(text);
     };
 
     return (
@@ -27,7 +31,9 @@ const ProfileInfo = (props) => {
                     rows="8"
                     cols="10"
                     ref={newPostArea}
-                ></textarea>
+                    value={areaText}
+                    onChange={changeAreaText}
+                />
             </div>
             <div>
                 <button onClick={addNewPost}>add post</button>

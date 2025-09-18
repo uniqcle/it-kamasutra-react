@@ -3,12 +3,16 @@ import MyPosts from "./MyPosts/MyPosts";
 import classes from "./Profile.module.css";
 
 const Profile = (props) => {
-    const { posts } = props;
-    const { addPost } = props;
+    const { posts, areaText } = props.profilePage;
+    const { addPost, updateTextArea } = props;
 
     return (
         <div className={classes.content}>
-            <ProfileInfo addPost={addPost} />
+            <ProfileInfo
+                addPost={addPost}
+                areaText={areaText}
+                updateTextArea={updateTextArea}
+            />
 
             <MyPosts posts={posts} />
         </div>
