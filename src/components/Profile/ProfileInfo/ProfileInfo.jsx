@@ -1,18 +1,21 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
+import {
+    addPostActionCreate,
+    updateNewPostTextActionCreator,
+} from "../../../redux/state";
 
 const ProfileInfo = (props) => {
     let newPostArea = React.createRef();
-    let { addPost, areaText, updateTextArea } = props;
+    let { dispatch, areaText } = props;
 
     let addNewPost = () => {
-        addPost();
+        dispatch(addPostActionCreate());
     };
 
     let changeAreaText = () => {
         let text = newPostArea.current.value;
-        updateTextArea(text);
-        console.log(text);
+        dispatch(updateNewPostTextActionCreator(text));
     };
 
     return (

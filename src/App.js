@@ -11,8 +11,8 @@ import NotFound from "./components/NotFound/NotFound";
 
 function App(props) {
     const { dialogs, messages } = props.state.dialogPage;
-    const { profilePage } = props.state;
-    const { addPost, updateTextArea } = props;
+    const { profilePage, dialogPage } = props.state;
+    const { dispatch } = props;
 
     return (
         <div className="app-wrapper">
@@ -25,18 +25,27 @@ function App(props) {
                     element={
                         <Profile
                             profilePage={profilePage}
-                            addPost={addPost}
-                            updateTextArea={updateTextArea}
+                            dispatch={dispatch}
                         />
                     }
                 />
 
                 <Route
                     path="/dialogs"
-                    element={<Dialogs dialogs={dialogs} messages={messages} />}
+                    element={
+                        <Dialogs
+                            dialogs={dialogs}
+                            messages={messages}
+                            dialogPage={dialogPage}
+                            dispatch={dispatch}
+                        />
+                    }
                 >
                     {/* <Route index element={<DialogLayout />} /> */}
-                    <Route path=":dialogId" element={<Dialogs />} />
+                    <Route
+                        path=":dialogId"
+                        element={<Dialogs dialogPage={dialogPage} />}
+                    />
                     {/* /dialogs/1, /dialogs/2 и т.д. */}
                 </Route>
 

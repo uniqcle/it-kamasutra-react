@@ -79,6 +79,12 @@ export const subscribe = (observer) => {
 
 /////////////////////////////////////////////
 
+const ADD_POST = "ADD_POST";
+const UPDATE_NEW_POST = "UPDATE_NEW_POST_TEXT";
+
+const ADD_MESSAGE = "ADD_MESSAGE";
+const UPDATE_MESSAGE = "UPDATE_MESSAGE";
+
 let store = {
     _state: {
         profilePage: {
@@ -126,6 +132,7 @@ let store = {
                     message: "thanks",
                 },
             ],
+            areaText: "text for dialog page...",
         },
     },
 
@@ -139,22 +146,57 @@ let store = {
         this._callSubscriber = observer;
     },
 
-    addPost() {
-        //debugger;
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.areaText,
-            likes: 10,
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.areaText = "";
-        this._callSubscriber(this._state);
-    },
+    addPost() {},
 
-    updateTextArea(newText) {
-        this._state.profilePage.areaText = newText;
-        this._callSubscriber(this._state);
+    updateTextArea(newText) {},
+
+    dispatch(action) {
+        // { type: 'ADD_POST' }
+        if (action.type === ADD_POST) {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.areaText,
+                likes: 10,
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.areaText = "";
+            this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_NEW_POST) {
+            this._state.profilePage.areaText = action.newText;
+            this._callSubscriber(this._state);
+        } else if (action.type === ADD_MESSAGE) {
+            this._state.dialogPage.messages.push({
+                id: Math.random(),
+                message: this._state.dialogPage.areaText,
+            });
+            this._state.dialogPage.areaText = "";
+
+            this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_MESSAGE) {
+            this._state.dialogPage.areaText = action.areaText;
+            this._callSubscriber(this._state);
+        }
     },
 };
+
+export const addPostActionCreate = () => ({
+    type: ADD_POST,
+});
+
+export const updateNewPostTextActionCreator = (text) => ({
+    type: UPDATE_NEW_POST,
+    newText: text,
+});
+
+export const addMessageActionCreator = () => ({
+    type: ADD_MESSAGE,
+});
+
+export const updateMessageActionCreator = (areaText) => ({
+    type: UPDATE_MESSAGE,
+    areaText: areaText,
+});
+
+
 
 export default store;

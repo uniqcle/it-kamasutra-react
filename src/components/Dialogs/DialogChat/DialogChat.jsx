@@ -2,8 +2,13 @@ import React from "react";
 import classes from "./DialogChat.module.css";
 import { useParams } from "react-router-dom";
 import Message from "../Message/Message";
+import {
+    updateMessageActionCreator,
+    addMessageActionCreator,
+} from "../../../redux/state";
 
 const DialogChat = (props) => {
+    const { dialogPage, dispatch } = props;
     const { dialogId } = useParams(); // ← получаем ID из URL
     const textAreaRef = React.createRef();
 
@@ -13,9 +18,13 @@ const DialogChat = (props) => {
         <Message key={m.id} id={m.id} message={m.message} />
     ));
 
-    const writeMessage = () => {
-        let text = textAreaRef.current.value;
-        alert(text);
+    const addMessage = () => {
+        dispatch(addMessageActionCreator());
+    };
+
+    const updateMessage = () => {
+        let areaText = textAreaRef.current.value;
+        dispatch(updateMessageActionCreator(areaText));
     };
 
     if (!dialogId) {
@@ -33,8 +42,13 @@ const DialogChat = (props) => {
                 <div className={classes.messages}>{messageList}</div>
 
                 <div>
-                    <textarea ref={textAreaRef}></textarea>
-                    <button onClick={writeMessage}>Написать</button>
+                    <textarea
+                        style={{ width: "843px", height: "163px" }}
+                        ref={textAreaRef}
+                        value={dialogPage.areaText}
+                        onChange={updateMessage}
+                    />
+                    <button onClick={addMessage}>Написать</button>
                 </div>
             </div>
         </>
