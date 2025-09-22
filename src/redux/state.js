@@ -77,13 +77,16 @@ export const subscribe = (observer) => {
 //export default state;
 */
 
+import { ADD_MESSAGE, UPDATE_MESSAGE, dialogReducer } from "./dialogReducer";
+import { ADD_POST, UPDATE_NEW_POST, profileReducer } from "./profileReducer";
+
 /////////////////////////////////////////////
 
-const ADD_POST = "ADD_POST";
-const UPDATE_NEW_POST = "UPDATE_NEW_POST_TEXT";
+// const ADD_POST = "ADD_POST";
+// const UPDATE_NEW_POST = "UPDATE_NEW_POST_TEXT";
 
-const ADD_MESSAGE = "ADD_MESSAGE";
-const UPDATE_MESSAGE = "UPDATE_MESSAGE";
+// const ADD_MESSAGE = "ADD_MESSAGE";
+// const UPDATE_MESSAGE = "UPDATE_MESSAGE";
 
 let store = {
     _state: {
@@ -146,36 +149,46 @@ let store = {
         this._callSubscriber = observer;
     },
 
-    addPost() {},
+    // addPost() {},
 
-    updateTextArea(newText) {},
+    // updateTextArea(newText) {},
+
+    // dispatch(action) {
+    //     // { type: 'ADD_POST' }
+    //     if (action.type === ADD_POST) {
+    //         let newPost = {
+    //             id: 5,
+    //             message: this._state.profilePage.areaText,
+    //             likes: 10,
+    //         };
+    //         this._state.profilePage.posts.push(newPost);
+    //         this._state.profilePage.areaText = "";
+    //         this._callSubscriber(this._state);
+    //     } else if (action.type === UPDATE_NEW_POST) {
+    //         this._state.profilePage.areaText = action.newText;
+    //         this._callSubscriber(this._state);
+    //     } else if (action.type === ADD_MESSAGE) {
+    //         this._state.dialogPage.messages.push({
+    //             id: Math.random(),
+    //             message: this._state.dialogPage.areaText,
+    //         });
+    //         this._state.dialogPage.areaText = "";
+
+    //         this._callSubscriber(this._state);
+    //     } else if (action.type === UPDATE_MESSAGE) {
+    //         this._state.dialogPage.areaText = action.areaText;
+    //         this._callSubscriber(this._state);
+    //     }
+    // },
 
     dispatch(action) {
-        // { type: 'ADD_POST' }
-        if (action.type === ADD_POST) {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.areaText,
-                likes: 10,
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.areaText = "";
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_NEW_POST) {
-            this._state.profilePage.areaText = action.newText;
-            this._callSubscriber(this._state);
-        } else if (action.type === ADD_MESSAGE) {
-            this._state.dialogPage.messages.push({
-                id: Math.random(),
-                message: this._state.dialogPage.areaText,
-            });
-            this._state.dialogPage.areaText = "";
+        this._state.profilePage = profileReducer(
+            this._state.profilePage,
+            action
+        );
+        this._state.dialogPage = dialogReducer(this._state.dialogPage, action);
 
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_MESSAGE) {
-            this._state.dialogPage.areaText = action.areaText;
-            this._callSubscriber(this._state);
-        }
+        this._callSubscriber(this._state);
     },
 };
 

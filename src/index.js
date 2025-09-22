@@ -8,7 +8,8 @@ import App from "./App";
 // import state, { subscribe } from "./redux/state";
 // import { addPost, updateTextArea } from "./redux/state";
 
-import store from "./redux/state";
+//import store from "./redux/state";
+import store from "./redux/store";
 
 // export let rerenderEntireTree = (state) => {
 //     const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -32,6 +33,7 @@ import store from "./redux/state";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 export let rerenderEntireTree = (state) => {
+    //debugger;
     root.render(
         <BrowserRouter>
             <App state={state} dispatch={store.dispatch.bind(store)} />
@@ -41,4 +43,9 @@ export let rerenderEntireTree = (state) => {
 
 rerenderEntireTree(store.getState());
 
-store.subscribe(rerenderEntireTree);
+//store.subscribe(rerenderEntireTree);
+
+store.subscribe(() => {
+    let state = store.getState(); 
+    rerenderEntireTree(state)
+});
