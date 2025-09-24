@@ -1,21 +1,17 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
-import {
-    addPostActionCreate,
-    updateNewPostTextActionCreator,
-} from "../../../redux/state";
+ 
 
 const ProfileInfo = (props) => {
-    let newPostArea = React.createRef();
-    let { dispatch, areaText } = props;
+    let newPostAreaElement = React.createRef();
 
     let addNewPost = () => {
-        dispatch(addPostActionCreate());
+        props.addNewPost();
     };
 
     let changeAreaText = () => {
-        let text = newPostArea.current.value;
-        dispatch(updateNewPostTextActionCreator(text));
+        let text = newPostAreaElement.current.value;
+        props.changeAreaText(text);
     };
 
     return (
@@ -33,8 +29,8 @@ const ProfileInfo = (props) => {
                     name=""
                     rows="8"
                     cols="10"
-                    ref={newPostArea}
-                    value={areaText}
+                    ref={newPostAreaElement}
+                    value={props.areaText}
                     onChange={changeAreaText}
                 />
             </div>
