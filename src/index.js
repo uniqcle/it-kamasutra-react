@@ -4,7 +4,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import StoreContext from "./StoreContext";
+// import StoreContext from "./_StoreContext";
+import { Provider } from "react-redux";
 
 // import state, { subscribe } from "./redux/state";
 // import { addPost, updateTextArea } from "./redux/state";
@@ -33,22 +34,61 @@ import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-export let rerenderEntireTree = (state) => {
+// export let rerenderEntireTree = (state) => {
+//     //debugger;
+//     root.render(
+//         <BrowserRouter>
+//             <Provider value={store}>
+//                 <App state={state} dispatch={store.dispatch.bind(store)} />
+//             </Provider>
+//         </BrowserRouter>
+//     );
+// };
+
+// rerenderEntireTree(store.getState());
+
+// //store.subscribe(rerenderEntireTree);
+
+// store.subscribe(() => {
+//     let state = store.getState(); 
+//     rerenderEntireTree(state)
+// });
+
+
+// export let rerenderEntireTree = () => {
+//     //debugger;
+//     root.render(
+//         <BrowserRouter>
+//             <Provider store={store}>
+//                 <App />
+//             </Provider>
+//         </BrowserRouter>
+//     );
+// };
+
+// rerenderEntireTree();
+
+// //store.subscribe(rerenderEntireTree);
+
+// store.subscribe(() => {
+//     rerenderEntireTree();
+// });
+
+
     //debugger;
     root.render(
         <BrowserRouter>
-            <StoreContext.Provider value={store}>
-                <App state={state} dispatch={store.dispatch.bind(store)} />
-            </StoreContext.Provider>
+            <Provider store={store}>
+                <App />
+            </Provider>
         </BrowserRouter>
     );
-};
+ 
 
-rerenderEntireTree(store.getState());
+ 
 
-//store.subscribe(rerenderEntireTree);
 
-store.subscribe(() => {
-    let state = store.getState(); 
-    rerenderEntireTree(state)
-});
+
+
+
+

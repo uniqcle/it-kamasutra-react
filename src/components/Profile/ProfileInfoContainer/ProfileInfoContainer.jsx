@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import ProfileInfo from "../ProfileInfo/ProfileInfo";
 
 import {
@@ -6,26 +7,49 @@ import {
     updateNewPostTextActionCreator,
 } from "../../../redux/state";
 
-const ProfileInfoContainer = (props) => {
-    let { dispatch, areaText } = props;
+// const ProfileInfoContainer = (props) => {
+//     let { dispatch, areaText } = props;
 
-    let addNewPost = () => {
-        dispatch(addPostActionCreate());
+//     let addNewPost = () => {
+//         dispatch(addPostActionCreate());
+//     };
+
+//     let changeAreaText = (text) => {
+//         dispatch(updateNewPostTextActionCreator(text));
+//     };
+
+//     return (
+//         <div>
+//             <ProfileInfo
+//                 addNewPost={addNewPost}
+//                 changeAreaText={changeAreaText}
+//                 areaText={areaText}
+//             />
+//         </div>
+//     );
+// };
+
+const mapStateToProps = (state) => {
+    return {
+        areaText: state.profilePage.areaText,
+        posts: state.profilePage.posts,
     };
-
-    let changeAreaText = (text) => {
-        dispatch(updateNewPostTextActionCreator(text));
-    };
-
-    return (
-        <div>
-            <ProfileInfo
-                addNewPost={addNewPost}
-				changeAreaText={changeAreaText}
-				areaText={areaText}
-            />
-        </div>
-    );
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addNewPost: () => {
+            dispatch(addPostActionCreate());
+        },
+        changeAreaText: (text) => {
+            dispatch(updateNewPostTextActionCreator(text));
+        },
+    };
+};
+
+const ProfileInfoContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ProfileInfo);
 
 export default ProfileInfoContainer;

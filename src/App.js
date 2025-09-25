@@ -10,9 +10,9 @@ import Settings from "./components/Settings/Settings";
 import NotFound from "./components/NotFound/NotFound";
 
 function App(props) {
-    const { dialogs, messages } = props.state.dialogPage;
-    const { profilePage, dialogPage } = props.state;
-    const { dispatch } = props;
+    // const { dialogs, messages } = props.state.dialogPage;
+    // const { profilePage, dialogPage } = props.state;
+    // const { dispatch } = props;
 
     return (
         <div className="app-wrapper">
@@ -20,34 +20,12 @@ function App(props) {
             <Navbar />
 
             <Routes>
-                <Route
-                    path="/profile"
-                    element={
-                        <Profile
-                            profilePage={profilePage}
-                            dispatch={dispatch}
-                        />
-                    }
-                />
+                <Route path="/profile" element={<Profile />} />
 
-                <Route
-                    path="/dialogs"
-                    element={
-                        <Dialogs
-                            dialogs={dialogs}
-                            messages={messages}
-                            dialogPage={dialogPage}
-                            dispatch={dispatch}
-                        />
-                    }
-                >
-                    {/* <Route index element={<DialogLayout />} /> */}
-                    <Route
-                        path=":dialogId"
-                        element={<Dialogs dialogPage={dialogPage} />}
-                    />
-                    {/* /dialogs/1, /dialogs/2 и т.д. */}
-                </Route>
+                <Route path="/dialogs" element={<Dialogs />} />
+                {/* <Route index element={<DialogLayout />} /> */}
+                {/* <Route path=":dialogId" element={<Dialogs />} /> */}
+                {/* /dialogs/1, /dialogs/2 и т.д. */}
 
                 <Route path="/news" element={<News />} />
                 <Route path="/music" element={<Music />} />

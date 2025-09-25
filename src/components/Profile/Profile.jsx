@@ -1,18 +1,16 @@
 import ProfileInfoContainer from "./ProfileInfoContainer/ProfileInfoContainer";
-import MyPosts from "./MyPosts/MyPosts";
-import classes from "./Profile.module.css";
 
-const Profile = (props) => {
-    const { posts, areaText } = props.profilePage;
-    const { dispatch } = props;
+ import classes from "./Profile.module.css";
 
-    return (
-        <div className={classes.content}>
-            <ProfileInfoContainer dispatch={dispatch} areaText={areaText} />
+ const Profile = (props) => {
+     // const { posts, areaText } = props;
+     // const { dispatch } = props;
 
-            <MyPosts posts={posts} />
-        </div>
-    );
-};
+     return (
+         <div className={classes.content}>
+             <ProfileInfoContainer />
+         </div>
+     );
+ };
 
 export default Profile;

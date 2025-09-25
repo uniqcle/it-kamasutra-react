@@ -1,10 +1,11 @@
 import React from "react";
 import classes from "./DialogChat.module.css";
 import { useParams } from "react-router-dom";
+import DialogsList from "../DialogsList/DialogsList";
 import Message from "../Message/Message";
 
 const DialogChat = (props) => {
-    const { dialogPage, messages } = props;
+    const { dialogs, messages, areaText } = props;
     const { dialogId } = useParams(); // ← получаем ID из URL
     const textAreaElement = React.createRef();
 
@@ -21,16 +22,21 @@ const DialogChat = (props) => {
         <Message key={m.id} id={m.id} message={m.message} />
     ));
 
-    if (!dialogId) {
-        return (
-            <div className={classes.dialogs}>
-                <div>Выбери с кем хочешь пообщаться</div>
-            </div>
-        );
-    }
+    // if (!dialogId) {
+    //     return (
+    //         <>
+    //             <DialogsList dialogs={dialogs} />
+    //             <div className={classes.dialogs}>
+    //                 <div>Выбери с кем хочешь пообщаться</div>
+    //             </div>
+    //         </>
+    //     );
+    // }
 
     return (
         <>
+            <DialogsList dialogs={dialogs} />
+
             <div>
                 <h3>Чат с пользователем #{dialogId} </h3>
                 <div className={classes.messages}>{messageList}</div>
@@ -39,7 +45,7 @@ const DialogChat = (props) => {
                     <textarea
                         style={{ width: "843px", height: "163px" }}
                         ref={textAreaElement}
-                        value={dialogPage.areaText}
+                        value={areaText}
                         onChange={updateMessage}
                     />
                     <button onClick={addMessage}>Написать</button>
