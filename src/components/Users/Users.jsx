@@ -1,24 +1,29 @@
 import styles from "./Users.module.css";
+import axios from "axios";
+import avatar from "../../assets/images/user.png";
 
 const Users = (props) => {
+    const getUsers = () => {
+        if (props.users.length === 0) {
+            axios
+                .get("https://social-network.samuraijs.com/api/1.0/users")
+                .then((response) => {
+                    props.setUsers(response.data.items);
+                });
+        }
+    };
 
-	if (!props.users.length === 0) {
-		props.setUsers([])
-	}
+    const unFollowClick = (userId) => {
+        props.follow(userId);
+    };
 
-	const unFollowClick = (userId) => {
-		props.follow(userId)
-		 
-	}
-
-	const followClick = (userId) => {
-		props.unfollow(userId)
-	 
-	}
+    const followClick = (userId) => {
+        props.unfollow(userId);
+    };
 
     return (
         <>
-            {" "}
+            <button onClick={getUsers}>Get Users</button>
             <div className={styles.users}>
                 {props.users.map((u) => (
                     <div key={u.id} className={styles.user}>
@@ -26,7 +31,11 @@ const Users = (props) => {
                             <div>
                                 <img
                                     className={styles.photo}
-                                    src={u.photo}
+                                    src={
+                                        u.photos.small !== null
+                                            ? u.photos.small
+                                            : avatar
+                                    }
                                     alt=""
                                 />
                             </div>
@@ -36,7 +45,7 @@ const Users = (props) => {
                                         Unfollow
                                     </button>
                                 ) : (
-                                    <button onClick={() => followClick(u.id) }>
+                                    <button onClick={() => followClick(u.id)}>
                                         Follow
                                     </button>
                                 )}
@@ -44,8 +53,7 @@ const Users = (props) => {
                         </div>
 
                         <div className={styles.row}>
-                            <div>Город: {u.location.city}</div>
-                            <div>Страна: {u.location.country} </div>
+                            <div>Имя: {u.name}</div>
                         </div>
                     </div>
                 ))}
