@@ -1,0 +1,21 @@
+
+.users {
+	display: flex; 
+	flex-direction: column;
+}
+
+.user {
+	display: flex; 
+	flex-direction: row;
+	margin: 10px; 
+
+}
+
+.row {
+	margin: 10px; 
+}
+
+.photo{
+	width: 100px; 
+}
+

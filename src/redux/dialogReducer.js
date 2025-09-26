@@ -34,25 +34,31 @@ let initialState = {
     areaText: "text for dialog page...",
 };
 
-
 const dialogReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
-            let stateCopy = {
+            return {
                 ...state,
+                messages: [
+                    ...state.messages,
+                    {
+                        id: Math.random(),
+                        message: state.areaText,
+                    },
+                ],
+                areaText: "",
             };
 
-            stateCopy.messages.push({
-                id: Math.random(),
-                message: state.areaText,
-            });
-            stateCopy.areaText = "";
-            return stateCopy;
+            // stateCopy.messages.push({
+            //     id: Math.random(),
+            //     message: state.areaText,
+            // });
         }
         case UPDATE_MESSAGE: {
-            let stateCopy = { ...state };
-            stateCopy.areaText = action.areaText;
-            return stateCopy;
+            return {
+                ...state,
+                areaText: action.areaText,
+            };
         }
         default:
             return state;

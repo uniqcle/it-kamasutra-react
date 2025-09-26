@@ -8,6 +8,7 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import NotFound from "./components/NotFound/NotFound";
+import UsersContainer from "./components/Users/UsersContainer";
 
 function App(props) {
     // const { dialogs, messages } = props.state.dialogPage;
@@ -26,6 +27,8 @@ function App(props) {
                 {/* <Route index element={<DialogLayout />} /> */}
                 {/* <Route path=":dialogId" element={<Dialogs />} /> */}
                 {/* /dialogs/1, /dialogs/2 и т.д. */}
+
+                <Route path="/users" element={<UsersContainer />} />
 
                 <Route path="/news" element={<News />} />
                 <Route path="/music" element={<Music />} />
