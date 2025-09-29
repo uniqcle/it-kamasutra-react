@@ -25,6 +25,16 @@ const Navbar = () => {
                         Dialogs
                     </NavLink>
                 </li>
+                <li className={`${classes.item}`}>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive ? classes.navActiveLink : ""
+                        }
+                        to="/users"
+                    >
+                        Users
+                    </NavLink>
+                </li>
                 <li className={classes.item}>
                     <NavLink
                         to="/news"
