@@ -1,3 +1,16 @@
+.user_page{
+	display: flex;
+	flex-direction: column;
+}
+
+.pagination span{
+cursor: pointer; 
+}
+
+.selected_page{
+	font-weight: bold; 
+	cursor: pointer; 
+}
 
 .users {
 	display: flex; 
@@ -18,4 +31,5 @@
 .photo{
 	width: 100px; 
 }
+
 
