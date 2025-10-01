@@ -1,5 +1,6 @@
 import styles from "./Users.module.css";
 import avatar from "../../assets/images/user.png";
+import { Link, NavLink } from "react-router-dom";
 
 const Users = (props) => {
     // количество страниц     общее кол-во / размер страницы
@@ -36,15 +37,17 @@ const Users = (props) => {
                         <div key={u.id} className={styles.user}>
                             <div className={styles.row}>
                                 <div>
-                                    <img
-                                        className={styles.photo}
-                                        src={
-                                            u.photos.small !== null
-                                                ? u.photos.small
-                                                : avatar
-                                        }
-                                        alt=""
-                                    />
+                                    <NavLink to={`/profile/${u.id}`}>
+                                        <img
+                                            className={styles.photo}
+                                            src={
+                                                u.photos.small !== null
+                                                    ? u.photos.small
+                                                    : avatar
+                                            }
+                                            alt=""
+                                        />
+                                    </NavLink>
                                 </div>
                                 <div>
                                     {u.followed ? (

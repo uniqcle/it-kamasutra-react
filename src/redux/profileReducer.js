@@ -1,21 +1,23 @@
 export const ADD_POST = "ADD_POST";
 export const UPDATE_NEW_POST = "UPDATE_NEW_POST_TEXT";
+export const SET_USER_PROFILE = "SET_USER_PROFILE";
 
-let initialState =  {
-            posts: [
-                {
-                    id: 1,
-                    message: "Hi, how are you?",
-                    likes: 12,
-                },
-                {
-                    id: 2,
-                    message: "It's my first project",
-                    likes: 11,
-                },
-            ],
-            areaText: "some text for area...",
-        }
+let initialState = {
+    posts: [
+        {
+            id: 1,
+            message: "Hi, how are you?",
+            likes: 12,
+        },
+        {
+            id: 2,
+            message: "It's my first project",
+            likes: 11,
+        },
+    ],
+    areaText: "some text for area...",
+    profile: null,
+};
 
 const profileReducer = (state = initialState, action) => {
     // { type: 'ADD_POST' }
@@ -56,9 +58,21 @@ const profileReducer = (state = initialState, action) => {
             // stateCopy.areaText = action.newText;
             // return stateCopy;
         }
+
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                profile: action.profile,
+            };
+        }
         default:
             return state;
     }
 };
 
-export { profileReducer }; 
+export const setUserProfile = (profile) => ({
+    type: SET_USER_PROFILE,
+    profile,
+});
+
+export { profileReducer };

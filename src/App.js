@@ -9,6 +9,7 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import NotFound from "./components/NotFound/NotFound";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 function App(props) {
     // const { dialogs, messages } = props.state.dialogPage;
@@ -21,7 +22,7 @@ function App(props) {
             <Navbar />
 
             <Routes>
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/*" element={<ProfileContainer />} />
 
                 <Route path="/dialogs" element={<Dialogs />} />
                 {/* <Route index element={<DialogLayout />} /> */}
