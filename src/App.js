@@ -22,7 +22,8 @@ function App(props) {
             <Navbar />
 
             <Routes>
-                <Route path="/profile/*" element={<ProfileContainer />} />
+                <Route path="/profile" element={<ProfileContainer />} />
+                <Route path="/profile/:userId" element={<ProfileContainer />} />
 
                 <Route path="/dialogs" element={<Dialogs />} />
                 {/* <Route index element={<DialogLayout />} /> */}
