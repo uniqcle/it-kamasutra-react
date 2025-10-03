@@ -13,7 +13,6 @@ import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 
-
 let mapStateToProps = (state) => {
     return {
         users: state.userPage.users,
@@ -49,11 +48,44 @@ let mapStateToProps = (state) => {
 
 class UsersAPIComponent extends React.Component {
     unFollowClick = (userId) => {
-        this.props.follow(userId);
+        try {
+            axios
+                .delete(
+                    `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+                    {
+                        withCredentials: true,
+                        headers: {
+                            "API-KEY": "fb60d39d-73f4-4438-9e92-7f1dd45a2aab",
+                        },
+                    }
+                )
+                .then((response) => {
+                    if (response.data.resultCode === 0) {
+                        this.props.follow(userId);
+                    }
+                });
+        } catch (e) {
+            console.info(e);
+        }
     };
 
     followClick = (userId) => {
-        this.props.unfollow(userId);
+        axios
+            .post(
+                `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+                {},
+                {
+                    withCredentials: true,
+                    headers: {
+                        "API-KEY": "fb60d39d-73f4-4438-9e92-7f1dd45a2aab",
+                    },
+                }
+            )
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    this.props.unfollow(userId);
+                }
+            });
     };
 
     componentDidMount() {
@@ -61,7 +93,10 @@ class UsersAPIComponent extends React.Component {
 
         axios
             .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+                {
+                    withCredentials: true,
+                }
             )
             .then((response) => {
                 this.props.toggleIsFetching(false);

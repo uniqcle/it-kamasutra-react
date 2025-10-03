@@ -10,6 +10,7 @@ import Settings from "./components/Settings/Settings";
 import NotFound from "./components/NotFound/NotFound";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 function App(props) {
     // const { dialogs, messages } = props.state.dialogPage;
@@ -18,7 +19,7 @@ function App(props) {
 
     return (
         <div className="app-wrapper">
-            <Header />
+            <HeaderContainer />
             <Navbar />
 
             <Routes>
