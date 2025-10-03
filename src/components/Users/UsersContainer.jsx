@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import { UsersAPI } from "../../api/users-api";
 
 let mapStateToProps = (state) => {
     return {
@@ -49,73 +50,45 @@ let mapStateToProps = (state) => {
 class UsersAPIComponent extends React.Component {
     unFollowClick = (userId) => {
         try {
-            axios
-                .delete(
-                    `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-                    {
-                        withCredentials: true,
-                        headers: {
-                            "API-KEY": "fb60d39d-73f4-4438-9e92-7f1dd45a2aab",
-                        },
-                    }
-                )
-                .then((response) => {
-                    if (response.data.resultCode === 0) {
-                        this.props.follow(userId);
-                    }
-                });
+            UsersAPI.unFollowUser(userId).then((data) => {
+                if (data.resultCode === 0) {
+                    this.props.follow(userId);
+                }
+            });
         } catch (e) {
             console.info(e);
         }
     };
 
     followClick = (userId) => {
-        axios
-            .post(
-                `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-                {},
-                {
-                    withCredentials: true,
-                    headers: {
-                        "API-KEY": "fb60d39d-73f4-4438-9e92-7f1dd45a2aab",
-                    },
-                }
-            )
-            .then((response) => {
-                if (response.data.resultCode === 0) {
-                    this.props.unfollow(userId);
-                }
-            });
+        UsersAPI.followUser(userId).then((data) => {
+            if (data.resultCode === 0) {
+                this.props.unfollow(userId);
+            }
+        });
     };
 
     componentDidMount() {
         this.props.toggleIsFetching(true);
 
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((response) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
-            });
+        UsersAPI.getUsers(
+            this.props.currentPage,
+            (this.props.pageSize = 10)
+        ).then((data) => {
+            this.props.toggleIsFetching(false);
+            this.props.setUsers(data.items);
+            this.props.setTotalUsersCount(data.totalCount);
+        });
     }
 
     onPageChanged = (currentPage) => {
         this.props.setCurrentPage(currentPage);
         this.props.toggleIsFetching(true);
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`
-            )
-            .then((response) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(response.data.items);
-            });
+
+        UsersAPI.getUsers(currentPage, this.props.pageSize).then((data) => {
+            this.props.toggleIsFetching(false);
+            this.props.setUsers(data.items);
+        });
     };
 
     render() {
