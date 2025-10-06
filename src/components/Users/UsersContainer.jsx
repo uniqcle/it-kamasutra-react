@@ -6,6 +6,7 @@ import {
     setCurrentPageAC,
     setTotalUsersCountAC,
     toggleIsFetchingAC,
+    toggleFollowInProgressAC,
 } from "../../redux/userReducer";
 
 import { connect } from "react-redux";
@@ -21,6 +22,7 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.userPage.totalUsersCount,
         currentPage: state.userPage.currentPage,
         isFetching: state.userPage.isFetching,
+        followInProgress: state.userPage.followInProgress,
     };
 };
 
@@ -50,10 +52,13 @@ let mapStateToProps = (state) => {
 class UsersAPIComponent extends React.Component {
     unFollowClick = (userId) => {
         try {
+            this.props.toggleFollowInProgress(true, userId);
+
             UsersAPI.unFollowUser(userId).then((data) => {
                 if (data.resultCode === 0) {
                     this.props.follow(userId);
                 }
+                this.props.toggleFollowInProgress(false, userId);
             });
         } catch (e) {
             console.info(e);
@@ -61,10 +66,13 @@ class UsersAPIComponent extends React.Component {
     };
 
     followClick = (userId) => {
+        this.props.toggleFollowInProgress(true, userId);
+
         UsersAPI.followUser(userId).then((data) => {
             if (data.resultCode === 0) {
                 this.props.unfollow(userId);
             }
+            this.props.toggleFollowInProgress(false, userId);
         });
     };
 
@@ -103,6 +111,7 @@ class UsersAPIComponent extends React.Component {
                         currentPage={this.props.currentPage}
                         users={this.props.users}
                         isFetching={this.props.isFetching}
+                        followInProgress={this.props.followInProgress}
                         unFollowClick={this.unFollowClick}
                         followClick={this.followClick}
                         onPageChanged={this.onPageChanged}
@@ -124,4 +133,5 @@ export default connect(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
     toggleIsFetching: toggleIsFetchingAC,
+    toggleFollowInProgress: toggleFollowInProgressAC,
 })(UsersAPIComponent);

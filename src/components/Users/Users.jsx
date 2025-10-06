@@ -52,6 +52,9 @@ const Users = (props) => {
                                 <div>
                                     {u.followed ? (
                                         <button
+                                            disabled={props.followInProgress.some(
+                                                (id) => id === u.id
+                                            )}
                                             onClick={() =>
                                                 props.unFollowClick(u.id)
                                             }
@@ -60,6 +63,9 @@ const Users = (props) => {
                                         </button>
                                     ) : (
                                         <button
+                                            disabled={props.followInProgress.some(
+                                                (id) => id === u.id
+                                            )}
                                             onClick={() =>
                                                 props.followClick(u.id)
                                             }
@@ -71,7 +77,9 @@ const Users = (props) => {
                             </div>
 
                             <div className={styles.row}>
-                                <div>Имя: {u.name}</div>
+                                <div>
+                                    Имя {u.id}: {u.name}
+                                </div>
                             </div>
                         </div>
                     ))}
