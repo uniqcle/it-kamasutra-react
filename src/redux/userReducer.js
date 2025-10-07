@@ -1,3 +1,5 @@
+import { UsersAPI } from "../api/users-api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
@@ -125,7 +127,42 @@ export const toggleFollowInProgressAC = (followInProgress, userId) => ({
     userId,
 });
 
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetchingAC(true));
 
+        UsersAPI.getUsers(currentPage, (pageSize = 10)).then((data) => {
+            dispatch(toggleIsFetchingAC(false));
+            dispatch(setUsersAC(data.items));
+            dispatch(setTotalUsersCountAC(data.totalCount));
+        });
+    };
+};
 
+export const unFollowThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowInProgressAC(true, userId));
+
+        UsersAPI.unFollowUser(userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(followAC(userId));
+            }
+            dispatch(toggleFollowInProgressAC(false, userId));
+        });
+    };
+};
+
+export const followThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowInProgressAC(true, userId));
+
+        UsersAPI.followUser(userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(unFollowAC(userId));
+            }
+            dispatch(toggleFollowInProgressAC(false, userId));
+        });
+    };
+};
 
 export default userReducer;

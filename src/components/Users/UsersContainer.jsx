@@ -1,19 +1,18 @@
 import React from "react";
 import {
     followAC,
-    setUsersAC,
     unFollowAC,
     setCurrentPageAC,
-    setTotalUsersCountAC,
-    toggleIsFetchingAC,
     toggleFollowInProgressAC,
+    getUsersThunkCreator,
+    unFollowThunkCreator,
+    followThunkCreator,
 } from "../../redux/userReducer";
 
 import { connect } from "react-redux";
 import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
-import { UsersAPI } from "../../api/users-api";
 
 let mapStateToProps = (state) => {
     return {
@@ -23,6 +22,7 @@ let mapStateToProps = (state) => {
         currentPage: state.userPage.currentPage,
         isFetching: state.userPage.isFetching,
         followInProgress: state.userPage.followInProgress,
+        isAuth: state.auth.isAuth,
     };
 };
 
@@ -52,51 +52,67 @@ let mapStateToProps = (state) => {
 class UsersAPIComponent extends React.Component {
     unFollowClick = (userId) => {
         try {
-            this.props.toggleFollowInProgress(true, userId);
+            // this.props.toggleFollowInProgress(true, userId);
 
-            UsersAPI.unFollowUser(userId).then((data) => {
-                if (data.resultCode === 0) {
-                    this.props.follow(userId);
-                }
-                this.props.toggleFollowInProgress(false, userId);
-            });
+            // UsersAPI.unFollowUser(userId).then((data) => {
+            //     if (data.resultCode === 0) {
+            //         this.props.follow(userId);
+            //     }
+            //     this.props.toggleFollowInProgress(false, userId);
+            // });
+
+            // перенесено в redux thunk
+            this.props.unFollowThunkCreator(userId);
         } catch (e) {
             console.info(e);
         }
     };
 
     followClick = (userId) => {
-        this.props.toggleFollowInProgress(true, userId);
+        // this.props.toggleFollowInProgress(true, userId);
 
-        UsersAPI.followUser(userId).then((data) => {
-            if (data.resultCode === 0) {
-                this.props.unfollow(userId);
-            }
-            this.props.toggleFollowInProgress(false, userId);
-        });
+        // UsersAPI.followUser(userId).then((data) => {
+        //     if (data.resultCode === 0) {
+        //         this.props.unfollow(userId);
+        //     }
+        //     this.props.toggleFollowInProgress(false, userId);
+        // });
+
+        try {
+            this.props.followThunkCreator(userId);
+        } catch (e) {
+            console.info(e);
+        }
     };
 
     componentDidMount() {
-        this.props.toggleIsFetching(true);
+        // this.props.toggleIsFetching(true);
 
-        UsersAPI.getUsers(
+        // UsersAPI.getUsers(
+        //     this.props.currentPage,
+        //     (this.props.pageSize = 10)
+        // ).then((data) => {
+        //     this.props.toggleIsFetching(false);
+        //     this.props.setUsers(data.items);
+        //     this.props.setTotalUsersCount(data.totalCount);
+        // });
+
+        this.props.getUsersThunkCreator(
             this.props.currentPage,
             (this.props.pageSize = 10)
-        ).then((data) => {
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(data.items);
-            this.props.setTotalUsersCount(data.totalCount);
-        });
+        );
     }
 
     onPageChanged = (currentPage) => {
         this.props.setCurrentPage(currentPage);
-        this.props.toggleIsFetching(true);
+        // this.props.toggleIsFetching(true);
 
-        UsersAPI.getUsers(currentPage, this.props.pageSize).then((data) => {
-            this.props.toggleIsFetching(false);
-            this.props.setUsers(data.items);
-        });
+        // UsersAPI.getUsers(currentPage, this.props.pageSize).then((data) => {
+        //     this.props.toggleIsFetching(false);
+        //     this.props.setUsers(data.items);
+        // });
+
+        this.props.getUsersThunkCreator(currentPage, this.props.pageSize);
     };
 
     render() {
@@ -115,6 +131,7 @@ class UsersAPIComponent extends React.Component {
                         unFollowClick={this.unFollowClick}
                         followClick={this.followClick}
                         onPageChanged={this.onPageChanged}
+                        isAuth={this.props.isAuth}
                     />
                 )}
             </>
@@ -129,9 +146,12 @@ class UsersAPIComponent extends React.Component {
 export default connect(mapStateToProps, {
     follow: followAC,
     unfollow: unFollowAC,
-    setUsers: setUsersAC,
+    // setUsers: setUsersAC,
+    // setTotalUsersCount: setTotalUsersCountAC,
+    //toggleIsFetching: toggleIsFetchingAC,
     setCurrentPage: setCurrentPageAC,
-    setTotalUsersCount: setTotalUsersCountAC,
-    toggleIsFetching: toggleIsFetchingAC,
     toggleFollowInProgress: toggleFollowInProgressAC,
+    getUsersThunkCreator: getUsersThunkCreator,
+    unFollowThunkCreator: unFollowThunkCreator,
+    followThunkCreator: followThunkCreator,
 })(UsersAPIComponent);

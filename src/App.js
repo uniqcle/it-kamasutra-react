@@ -2,7 +2,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
+import Login from "./components/Login/Login";
 import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -23,6 +23,7 @@ function App(props) {
             <Navbar />
 
             <Routes>
+                <Route path="/login" element={<Login />} />
                 <Route path="/profile" element={<ProfileContainer />} />
                 <Route path="/profile/:userId" element={<ProfileContainer />} />
 

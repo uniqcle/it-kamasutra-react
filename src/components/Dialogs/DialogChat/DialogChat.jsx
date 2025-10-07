@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./DialogChat.module.css";
 import { useParams } from "react-router-dom";
+import { redirect, Navigate } from "react-router-dom";
 import DialogsList from "../DialogsList/DialogsList";
 import Message from "../Message/Message";
 
@@ -32,6 +33,10 @@ const DialogChat = (props) => {
     //         </>
     //     );
     // }
+
+    if (props.isAuth === false) {
+        return <Navigate to="/login" />;
+    }
 
     return (
         <>

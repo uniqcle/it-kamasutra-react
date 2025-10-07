@@ -44,6 +44,7 @@ let mapStateToProps = (state) => {
         dialogs: state.dialogPage.dialogs,
         messages: state.dialogPage.messages,
         areaText: state.dialogPage.areaText,
+        isAuth: state.auth.isAuth,
     };
 };
 

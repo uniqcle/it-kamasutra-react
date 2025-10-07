@@ -1,3 +1,6 @@
+import { UsersAPI } from "../api/users-api";
+import { setAuthUserData } from "../redux/authReducer";
+
 export const ADD_POST = "ADD_POST";
 export const UPDATE_NEW_POST = "UPDATE_NEW_POST_TEXT";
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -74,5 +77,24 @@ export const setUserProfile = (profile) => ({
     type: SET_USER_PROFILE,
     profile,
 });
+
+export const authProfileThunkCreator = () => {
+    return (dispatch) => {
+        UsersAPI.authProfile().then((data) => {
+            if (data.resultCode === 0) {
+                let { id, login, email } = data.data;
+                dispatch(setAuthUserData(id, login, email));
+            }
+        });
+    };
+};
+
+export const getProfileThunkCreateor = (userId) => {
+    return (dispatch) => {
+        UsersAPI.getProfileByUserId(userId).then((data) => {
+            dispatch(setUserProfile(data));
+        });
+    };
+};
 
 export { profileReducer };

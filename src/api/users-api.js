@@ -15,15 +15,25 @@ export const UsersAPI = {
             .then((response) => response.data);
     },
 
+    followUser: async (userId) => {
+        return instance
+            .post(`follow/${userId}`)
+            .then((response) => response.data);
+    },
+
     unFollowUser: async (userId) => {
         return instance
             .delete(`follow/${userId}`)
             .then((response) => response.data);
     },
 
-    followUser: async (userId) => {
+    authProfile: async () => {
+        return instance.get(`auth/me`).then((response) => response.data);
+    },
+
+    getProfileByUserId: async (userId) => {
         return instance
-            .post(`follow/${userId}`)
+            .get(`profile/${userId}`)
             .then((response) => response.data);
     },
 };

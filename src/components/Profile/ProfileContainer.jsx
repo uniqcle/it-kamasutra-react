@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Profile from "./Profile";
-import { setUserProfile } from "../../redux/profileReducer";
+import {
+    setUserProfile,
+    getProfileThunkCreateor,
+} from "../../redux/profileReducer";
 
 function withRouter(Children) {
     return (props) => {
@@ -26,17 +29,19 @@ class ProfileContainer extends React.Component {
             userId = 26923; //Пишем Ваш id
         }
 
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
-            )
-            .then((response) => {
-                this.props.setUserProfile(response.data);
+        // axios
+        //     .get(
+        //         `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
+        //     )
+        //     .then((response) => {
+        //         this.props.setUserProfile(response.data);
 
-                // this.props.toggleIsFetching(false);
-                // this.props.setUsers(response.data.items);
-                // this.props.setTotalUsersCount(response.data.totalCount);
-            });
+        //         // this.props.toggleIsFetching(false);
+        //         // this.props.setUsers(response.data.items);
+        //         // this.props.setTotalUsersCount(response.data.totalCount);
+        //     });
+
+        this.props.getProfileThunkCreateor(userId);
     }
 
     render() {
@@ -52,4 +57,5 @@ let WithUrlDataContainerComponent = withRouter(ProfileContainer);
 
 export default connect(mapStateToProps, {
     setUserProfile: setUserProfile,
+    getProfileThunkCreateor: getProfileThunkCreateor,
 })(WithUrlDataContainerComponent);
