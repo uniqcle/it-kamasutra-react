@@ -1,12 +1,13 @@
 import React from "react";
+import { compose } from "redux";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import Profile from "./Profile";
 import {
     setUserProfile,
     getProfileThunkCreateor,
 } from "../../redux/profileReducer";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 function withRouter(Children) {
     return (props) => {
@@ -16,10 +17,6 @@ function withRouter(Children) {
         return <Children {...props} match={match} />;
     };
 }
-
-let mapStateToProps = (state) => ({
-    profile: state.profilePage.profile,
-});
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
@@ -53,9 +50,30 @@ class ProfileContainer extends React.Component {
     }
 }
 
-let WithUrlDataContainerComponent = withRouter(ProfileContainer);
+// let AuthRedirectComponent = (props) => {
+//     if (props.isAuth === false) return <Navigate to="/login" />;
+//     return <ProfileContainer {...props} />;
+// };
 
-export default connect(mapStateToProps, {
-    setUserProfile: setUserProfile,
-    getProfileThunkCreateor: getProfileThunkCreateor,
-})(WithUrlDataContainerComponent);
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
+
+// let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
+
+let mapStateToProps = (state) => ({
+    profile: state.profilePage.profile,
+});
+
+// export default connect(mapStateToProps, {
+//     setUserProfile: setUserProfile,
+//     getProfileThunkCreateor: getProfileThunkCreateor,
+// })(WithUrlDataContainerComponent);
+
+/// аналогичная запись. цепочка вызовов hoc
+export default compose(
+    withAuthRedirect,
+    withRouter,
+    connect(mapStateToProps, {
+        setUserProfile: setUserProfile,
+        getProfileThunkCreateor: getProfileThunkCreateor,
+    })
+)(ProfileContainer);

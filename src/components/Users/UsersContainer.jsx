@@ -1,4 +1,6 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import {
     followAC,
     unFollowAC,
@@ -10,7 +12,6 @@ import {
 } from "../../redux/userReducer";
 
 import { connect } from "react-redux";
-import axios from "axios";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 
@@ -99,7 +100,7 @@ class UsersAPIComponent extends React.Component {
 
         this.props.getUsersThunkCreator(
             this.props.currentPage,
-            (this.props.pageSize = 10)
+            this.props.pageSize || 10
         );
     }
 
@@ -116,6 +117,8 @@ class UsersAPIComponent extends React.Component {
     };
 
     render() {
+        if (this.props.isAuth === false) return <Navigate to="/login" />;
+
         return (
             <>
                 {this.props.isFetching ? (
@@ -131,13 +134,18 @@ class UsersAPIComponent extends React.Component {
                         unFollowClick={this.unFollowClick}
                         followClick={this.followClick}
                         onPageChanged={this.onPageChanged}
-                        isAuth={this.props.isAuth}
                     />
                 )}
             </>
         );
     }
 }
+
+// let AuthRedirectComponent = (props) => {
+//     if (props.isAuth === false) return <Navigate to="/login" />;
+//     return <UsersAPIComponent {...props} />;
+// };
+let AuthRedirectComponent = withAuthRedirect(UsersAPIComponent);
 
 // export default connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent);
 // либо 2-й вариант. Сразу закидываем объект коллбэков. connect сам сделает dispatch
@@ -154,4 +162,4 @@ export default connect(mapStateToProps, {
     getUsersThunkCreator: getUsersThunkCreator,
     unFollowThunkCreator: unFollowThunkCreator,
     followThunkCreator: followThunkCreator,
-})(UsersAPIComponent);
+})(AuthRedirectComponent);
