@@ -1,15 +1,12 @@
 import Preloader from '../../common/Preloader/Preloader';
-
+import ProfileStatus from "../ProfileStatus/ProfileStatus";
 
 const ProfileHeader = (props) => {
+    if (!props.profile) {
+        return <Preloader />;
+    }
 
-	if (!props.profile) {
-		return <Preloader/>
-	}  
-
- 
-
-	return (
+    return (
         <>
             <div>
                 <img
@@ -17,11 +14,14 @@ const ProfileHeader = (props) => {
                     alt=""
                 />
             </div>
+
+            <ProfileStatus {...props} />
+
             <div>
-                <h3>{props.profile.aboutMe}</h3> 
+                <h3>{props.profile.aboutMe}</h3>
             </div>
         </>
     );
-}
+};
 
 export default ProfileHeader

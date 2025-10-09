@@ -1,9 +1,10 @@
-import { UsersAPI } from "../api/users-api";
+import { UsersAPI, ProfileAPI } from "../api/users-api";
 import { setAuthUserData } from "../redux/authReducer";
 
 export const ADD_POST = "ADD_POST";
 export const UPDATE_NEW_POST = "UPDATE_NEW_POST_TEXT";
 export const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 
 let initialState = {
     posts: [
@@ -20,6 +21,7 @@ let initialState = {
     ],
     areaText: "some text for area...",
     profile: null,
+    status: "sfd111",
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -68,6 +70,13 @@ const profileReducer = (state = initialState, action) => {
                 profile: action.profile,
             };
         }
+
+        case SET_STATUS: {
+            return {
+                ...state,
+                status: action.status,
+            };
+        }
         default:
             return state;
     }
@@ -77,6 +86,25 @@ export const setUserProfile = (profile) => ({
     type: SET_USER_PROFILE,
     profile,
 });
+
+export const setStatus = (status) => ({
+    type: SET_STATUS,
+    status,
+});
+
+export const getStatusThunkCreator = (userId) => (dispatch) => {
+    ProfileAPI.getStatus(userId).then((response) => {
+        dispatch(setStatus(response.data));
+    });
+};
+
+export const updateStatusThunkCreator = (status) => (dispatch) => {
+    ProfileAPI.updateStatus(status).then((response) => {
+        if (response.data.resultCode === 0) {
+            dispatch(setStatus(response.data));
+        }
+    });
+};
 
 export const authProfileThunkCreator = () => {
     return (dispatch) => {

@@ -32,8 +32,25 @@ export const UsersAPI = {
     },
 
     getProfileByUserId: async (userId) => {
-        return instance
-            .get(`profile/${userId}`)
-            .then((response) => response.data);
+        // переделегирование
+        return ProfileAPI.getProfileByUserId(userId).then(
+            (response) => response.data
+        );
+    },
+};
+
+export const ProfileAPI = {
+    getProfileByUserId: async (userId) => {
+        return instance.get(`profile/` + userId);
+    },
+
+    getStatus: async (userId) => {
+        return instance.get(`profile/status/${userId}`);
+    },
+
+    updateStatus: async (status) => {
+        return instance.put(`profile/status`, {
+            status: status,
+        });
     },
 };

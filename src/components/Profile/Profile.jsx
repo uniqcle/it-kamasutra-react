@@ -8,7 +8,7 @@ const Profile = (props) => {
 
     return (
         <div className={classes.content}>
-            <ProfileHeader profile={props.profile} />
+            <ProfileHeader {...props} profile={props.profile} />
             <ProfileInfoContainer />
         </div>
     );

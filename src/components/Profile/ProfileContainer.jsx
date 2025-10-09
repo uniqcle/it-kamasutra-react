@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import Profile from "./Profile";
 import {
     setUserProfile,
+    getStatusThunkCreator,
+    updateStatusThunkCreator,
     getProfileThunkCreateor,
 } from "../../redux/profileReducer";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
@@ -23,7 +25,7 @@ class ProfileContainer extends React.Component {
         let userId = this.props.match.params.userId;
         // let userId = this.props.router.params.userId;
         if (!userId) {
-            userId = 26923; //Пишем Ваш id
+            userId = 32637; //Пишем Ваш id
         }
 
         // axios
@@ -39,6 +41,7 @@ class ProfileContainer extends React.Component {
         //     });
 
         this.props.getProfileThunkCreateor(userId);
+        this.props.getProfileStatus(userId);
     }
 
     render() {
@@ -61,6 +64,7 @@ class ProfileContainer extends React.Component {
 
 let mapStateToProps = (state) => ({
     profile: state.profilePage.profile,
+    status: state.profilePage.status,
 });
 
 // export default connect(mapStateToProps, {
@@ -75,5 +79,7 @@ export default compose(
     connect(mapStateToProps, {
         setUserProfile: setUserProfile,
         getProfileThunkCreateor: getProfileThunkCreateor,
+        getProfileStatus: getStatusThunkCreator,
+        updateProfileStatus: updateStatusThunkCreator,
     })
 )(ProfileContainer);
